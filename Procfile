@@ -1,1 +1,1 @@
-web: gunicorn app:app_schou
+web: gunicorn application_schou.py
