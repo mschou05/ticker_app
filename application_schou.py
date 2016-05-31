@@ -12,6 +12,7 @@ app_schou = Flask(__name__)
 TOOLS = "pan,wheel_zoom,box_zoom,reset,save"
 
 app_schou.vars={}
+app_schou.vars['stock']='aapl'
               
 @app_schou.route('/',methods= ['GET','POST'])
 def index_schou():
@@ -23,7 +24,7 @@ def index_schou():
 	
 @app_schou.route('/main')
 def main():	
-	stock = str(app_schou.vars.get('stock','aapl')).upper()
+	stock = str(app_schou.vars.get('stock','yhoo')).upper()
 	api_url = 'https://www.quandl.com/api/v1/datasets/WIKI/%s.json' % stock
 	session = requests.Session()
 	session.mount('http://', requests.adapters.HTTPAdapter(max_retries=3))
