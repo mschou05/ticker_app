@@ -12,7 +12,7 @@ app_schou = Flask(__name__)
 TOOLS = "pan,wheel_zoom,box_zoom,reset,save"
 
 app_schou.vars={}
-app_schou.vars['stock']='aapl'
+app_schou.vars['stock']=''
               
 @app_schou.route('/',methods= ['GET','POST'])
 def index_schou():
@@ -24,7 +24,7 @@ def index_schou():
 	
 @app_schou.route('/main')
 def main():	
-	stock = str(app_schou.vars.get('stock','yhoo')).upper()
+	stock = str(app_schou.vars.get('stock','')).upper()
 	api_url = 'https://www.quandl.com/api/v1/datasets/WIKI/%s.json' % stock
 	session = requests.Session()
 	session.mount('http://', requests.adapters.HTTPAdapter(max_retries=3))
@@ -32,11 +32,13 @@ def main():
 	
 	j=json.loads(raw_data.text)
 	
+	## error handle here, if no column named data
 	df= pd.DataFrame(j['data'],columns=j['column_names'])
 	one_m_ago = datetime.date.today() -relativedelta(months=1)
 	df['DateTime'] = pd.to_datetime(df.Date)
 	pastMonth =df.loc[df.DateTime>one_m_ago,['DateTime','Adj. Close']]
-
+	
+	## need error handling here: if no data
 	
 	plot = figure(tools=TOOLS,
               title=stock + ' Closing Price over Previous Month',
