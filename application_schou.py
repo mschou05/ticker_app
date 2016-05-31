@@ -50,5 +50,5 @@ def main():
 	return render_template('line.html', script=script, div=div)
 	
 if __name__ == '__main__':
-    app_schou.run(debug=True,port=33507)
+    app_schou.run(debug=False,port=33507)
     
