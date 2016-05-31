@@ -23,7 +23,7 @@ def index_schou():
 	
 @app_schou.route('/main')
 def main():	
-	stock = str(app_schou.vars['stock']).upper()
+	stock = str(app_schou.vars.get('stock','aapl')).upper()
 	api_url = 'https://www.quandl.com/api/v1/datasets/WIKI/%s.json' % stock
 	session = requests.Session()
 	session.mount('http://', requests.adapters.HTTPAdapter(max_retries=3))
