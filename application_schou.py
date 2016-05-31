@@ -14,7 +14,7 @@ TOOLS = "pan,wheel_zoom,box_zoom,reset,save"
 app_schou.vars={}
               
 @app_schou.route('/',methods= ['GET','POST'])
-def index_schou():
+def index_sch():
 	if request.method=='GET':
 		return render_template('userinfo_schou.html')
 	else:
